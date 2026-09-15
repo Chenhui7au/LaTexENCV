@@ -1,0 +1,88 @@
+%%%%%%%%%%%%%%%
+% 导言区配置 / preamble configuration
+% 由 cv-main.tex 载入：\input{preamble}
+% 使用说明见 README.md
+%
+% 载入时机：必须在 \usepackage{settings} 之后（依赖其加载的 biblatex）
+% 例外：\PassOptionsToPackage{...}{biblatex} 必须留在 cv-main.tex 里
+%       （它得在 settings.sty 载入 biblatex 之前生效）
+%
+
+% 去掉 URL 前的 "[Online] Available:" 前缀
+\DefineBibliographyStrings{english}{url={\textsc{url}}}
+
+%% 自定义文献排序：年份降序 → 本人作者位次(sortkey)升序 → 作者 → 标题
+%% sortkey 由 own-bib.bib 提供，1 = 第一作者
+%% 详见 README「参考文献：排序」
+\DeclareSortingTemplate{ryc}{
+  \sort{\field{presort}}
+  \sort[direction=descending]{\field{sortyear}\field{year}\literal{9999}}
+  \sort{\field{sortkey}\literal{99}}
+  \sort{\field{sortname}\field{author}\field{editor}\field{translator}\field{sorttitle}\field{title}}
+  \sort{\field{sorttitle}\field{title}}
+}
+\ExecuteBibliographyOptions{sorting=ryc}
+
+%% 作者列表截断到本人为止，如 "C. 7au et al."、"Smith, C. 7au and others"
+%% sortkey 是 skipout 字段(不写入 .bbl)，故先复制到通用字段 usera 供排版使用
+%% 详见 README「作者列表截断」
+\DeclareSourcemap{
+  \maps[datatype=bibtex]{
+    %% 容错：把从期刊网页复制的 "et al." 规范成 biblatex 的标准记法 "others"，
+    %% 否则它会被当成一位名叫 "al." 的真实作者而显示出来
+    \map{\step[fieldsource=author,
+                match=\regexp{\bet\s+al\.?},
+                replace={others}]}
+    \map{\step[fieldsource=sortkey, fieldset=usera, origfieldval]}
+  }
+}
+
+%% ---------------------------------------------------------------------------
+%% 截断词按本人署名位次区分：
+%%   本人一作、后面还有作者   ->  C. 7au et al.
+%%   本人非一作、后面还有作者 ->  Smith, C. 7au and others
+%%   本人已是最后一位作者     ->  Smith and C. 7au（不加后缀）
+%% "et al." 是缩写，前面保留逗号；"and others" 是连词短语，前面不加逗号。
+%% 不想区分就把下面整块删掉，全文统一用 "et al."
+%% ---------------------------------------------------------------------------
+\newtoggle{rycfirstauth}
+\NewBibliographyString{rycandothers}
+\DefineBibliographyStrings{english}{rycandothers={and others}}
+\xpatchbibmacro{name:andothers}
+  {\bibstring{andothers}}
+  {\iftoggle{rycfirstauth}{\bibstring{andothers}}{\bibstring{rycandothers}}}
+  {}{}
+\xpatchbibmacro{name:andothers}
+  {\finalandcomma}
+  {\iftoggle{rycfirstauth}{\finalandcomma}{}}
+  {}{}
+
+%% 把 maxnames/minnames 设成本人位次 = 打印到本人为止，并记录是否为第一作者
+\AtEveryBibitem{%
+  \toggletrue{rycfirstauth}%
+  \iffieldundef{usera}{}{%
+    \defcounter{maxnames}{\thefield{usera}}%
+    \defcounter{minnames}{\thefield{usera}}%
+    \ifnumgreater{\thefield{usera}}{1}{\togglefalse{rycfirstauth}}{}}}%
+
+\addbibresource{own-bib.bib}
+
+
+% 字体分支：XeLaTeX/LuaLaTeX 与 pdfLaTeX
+\ifxetexorluatex
+  \usepackage{fontspec}
+  \usepackage[p,osf,swashQ]{cochineal}
+  \usepackage[medium,bold]{cabin}
+  \usepackage[varqu,varl,scale=0.9]{zi4}
+\else
+  \usepackage[T1]{fontenc}
+  \usepackage[p,osf,swashQ]{cochineal}
+  \usepackage{cabin}
+  \usepackage[varqu,varl,scale=0.9]{zi4}
+\fi
+
+% 可选：页边距 / 配色 / 条目前缀符号，详见 README
+% \geometry{left=1cm,right=1cm,top=1.5cm,bottom=1.5cm}
+% \definecolor{SwishLineColour}{HTML}{00FFFF}   % 标题下方渐变线
+% \definecolor{MarkerColour}{HTML}{0000CC}      % 图标与圆圈编号
+% \prefixmarker{$\diamond$}

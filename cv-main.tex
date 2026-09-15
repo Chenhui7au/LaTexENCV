@@ -1,0 +1,65 @@
+%%%%%%%%%%%%%%%
+% Curriculum Vitae — reusable template
+% All personal data below is fictional. 详细说明见 README.md
+%
+% 文件分工: settings.sty = 样式定义; preamble.tex = 导言区配置
+%           本文件 = 个人信息 + 章节顺序
+%
+\documentclass[a4paper,skipsamekey,11pt,english]{curve}
+
+% 中文支持需改用 XeLaTeX
+% \usepackage{ctex}
+
+% 文献样式：IEEE（必须在 \usepackage{settings} 之前设置）
+\PassOptionsToPackage{style=ieee,uniquename=init,defernumbers=true}{biblatex}
+
+% 样式定义在 settings.sty；文献排序/截断/字体等在 preamble.tex
+\usepackage{settings}
+\input{preamble}
+
+%% 加粗本人姓名，格式「姓/名」，末尾不留空格。详见 README
+%% 本人：名 = CH，姓 = 7au
+\mynames{7au/CH}
+
+%% 照片：想隐藏就把下面两行对调注释
+\includecomment{fullonly}
+% \excludecomment{fullonly}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\leftheader{%
+  % 姓名（名 = CH，姓 = 7au）
+  {\LARGE\bfseries\sffamily CH 7au} \\
+  \\
+  % 研究兴趣
+  \textbf{Research Interest}: ...\\
+  % 邮箱
+  \textbf{E-mail}: \href{mailto: ch7au@my.gmail.com}{\texttt{ch7au@my.gmail.com}}
+}
+
+\rightheader{~}
+\begin{fullonly}
+\photo[r]{photo}
+\photoscale{0.13}
+\end{fullonly}
+
+\begin{document}
+\makeheaders[c]
+
+\vspace{10pt}
+
+%% 章节顺序 = 下列各行的先后；用不到的注释掉即可
+%% 各章节内容都在 sections/ 目录下
+\makerubric{sections/education}
+\makerubric{sections/employment}
+
+%% publications 用 \input（内部是 \printbibliography），不是 \makerubric
+\input{sections/publications}
+
+\makerubric{sections/project}
+\makerubric{sections/honors}
+\makerubric{sections/skills}
+
+\end{document}

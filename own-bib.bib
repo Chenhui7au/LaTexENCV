@@ -1,0 +1,34 @@
+%% 文献库
+%% 作者就按正常方式列出全部姓名（用 and 连接），模板会自动决定显示到哪一位
+%% 姓名格式：姓在前、名在后，中间用逗号隔开，如 {7au, CH}
+%% sortkey = 本人在作者列表中的位次（1 = 第一作者），同时决定排序与作者截断，
+%%           必须与真实位次一致；位次达两位数时全部补零（{01}…{10}）
+%% keywords = {ongoing} 标记未发表/在投，论文接收后删掉该行即自动归位
+%% 详见 README「参考文献：排序 / 分类 / 作者列表截断」
+
+@article{7au-a-2025,
+  sortkey = {1},
+  title = {An Example Journal Article on Evidence-Based Practice},
+  journal = {Journal of Example Research},
+  author = {7au, CH and Smith, John and Brown, Alice and Lee, Mary},
+  year = {2025}
+}
+
+@inproceedings{7au-c-2025,
+  sortkey = {1},
+  author = {7au, CH and Taylor, Chris and Wilson, Kate},
+  year = {2025},
+  booktitle = {International Conference on Example Studies},
+  title = {[oral] An Example Conference Presentation},
+  address = {Example City, Example Country}
+}
+
+%% 未发表 / 在投：keywords = {ongoing} 是分类的关键，论文接收后删掉这行
+@article{7au-d-2026,
+  sortkey = {2},
+  keywords = {ongoing},
+  title = {An Example Manuscript Currently Under Preparation},
+  journal = {},
+  author = {Wang, Li and 7au, CH and Zhang, Wei},
+  year = {2026}
+}

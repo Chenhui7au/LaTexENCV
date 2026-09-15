@@ -1,0 +1,21 @@
+%% Research Publications
+%% 一条 \printbibliography = 一个类别，行的先后即类别先后
+%% 排序由 preamble.tex 统一控制；详见 README「参考文献：分类」
+
+\makerubrichead{Research Publications}
+
+%% 把所有 bib 条目都算作已引用，否则未在正文引用的不会显示
+\nocite{*}
+
+%% 合并为一个列表（不分类别）：
+% \printbibliography[heading={none}]
+
+\printbibliography[heading={subbibliography},title={Journal Articles},type=article,notkeyword={ongoing}]
+
+\printbibliography[heading={subbibliography},title={Conference Proceedings},type=inproceedings]
+
+%% 书籍章节（需 settings.sty 的 booksandchapters 过滤器）
+% \printbibliography[heading={subbibliography},title={Books and Chapters},filter={booksandchapters}]
+
+%% 未发表/在投，对应 own-bib.bib 里的 keywords = {ongoing}
+\printbibliography[heading={subbibliography},title={Manuscripts in Preparation},keyword={ongoing}]
