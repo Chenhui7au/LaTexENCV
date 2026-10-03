@@ -1,0 +1,31 @@
+%% 个人信息：姓名、研究兴趣、邮箱、照片
+%% ⚠ 必须在导言区加载，\leftheader、\rightheader、\photo 都只能在
+%%   \begin{document} 之前使用
+
+%% 加粗本人姓名，格式「姓/名」，末尾不留空格。详见 README
+%% 本人：名 = CH，姓 = 7au
+\mynames{7au/CH}
+
+%% 照片：想隐藏就把下面两行对调注释
+\includecomment{fullonly}
+% \excludecomment{fullonly}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\leftheader{%
+  % 姓名（名 = CH，姓 = 7au）
+  {\LARGE\bfseries\sffamily CH 7au} \\
+  \\
+  % 研究兴趣
+  \textbf{Research Interest}: ...\\
+  % 邮箱
+  \textbf{E-mail}: \href{mailto: ch7au@my.gmail.com}{\texttt{ch7au@my.gmail.com}}
+}
+
+\rightheader{~}
+\begin{fullonly}
+\photo[r]{asset/photo}
+\photoscale{0.13}
+\end{fullonly}

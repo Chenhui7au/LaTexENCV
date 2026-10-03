@@ -12,7 +12,7 @@
 \DefineBibliographyStrings{english}{url={\textsc{url}}}
 
 %% 自定义文献排序：年份降序 → 本人作者位次(sortkey)升序 → 作者 → 标题
-%% sortkey 由 own-bib.bib 提供，1 = 第一作者
+%% sortkey 由 sections/04_publications.bib 提供，1 = 第一作者
 %% 详见 README「参考文献：排序」
 \DeclareSortingTemplate{ryc}{
   \sort{\field{presort}}
@@ -65,7 +65,7 @@
     \defcounter{minnames}{\thefield{usera}}%
     \ifnumgreater{\thefield{usera}}{1}{\togglefalse{rycfirstauth}}{}}}%
 
-\addbibresource{own-bib.bib}
+\addbibresource{sections/04_publications.bib}
 
 
 % 字体分支：XeLaTeX/LuaLaTeX 与 pdfLaTeX
